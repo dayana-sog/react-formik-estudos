@@ -24,7 +24,6 @@ export const Container = styled.div`
     background-image: none;
     border: 1px solid #ccc;
     border-radius: 4px;
-    margin-bottom: 20px;
   }
 
   .button {
@@ -41,8 +40,6 @@ export const Container = styled.div`
   }
 
   .error {
-    margin-top: -15px;
-    margin-bottom: 10px;
     color: red;
   }
 `;

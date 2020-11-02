@@ -1,7 +1,8 @@
 import React from 'react';
-import { useFormik } from 'formik';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 
+import TextError from '../TextError';
 
 import { Container } from './styles';
 
@@ -9,27 +10,14 @@ const initialValues = {
   name: '',
   email: '',
   channel: '',
+  comments: '',
+  address: '',
+  social: {
+    facebook: '',
+    twitter: '',
+  },
+  phoneNumbers: ['', ''],
 };
-
-// const validate = values =>  {
-//   let errors = {};
-
-//   if (!values.name) {
-//     errors.name= 'Name is required!'   
-//   }
-
-//   if (!values.email) {
-//     errors.email= 'Email is required!'   
-//   } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-//     errors.email = 'Invalid email format'
-//   }
-
-//   if (!values.channel) {
-//     errors.channel= 'Channel is required!'   
-//   }
-
-//   return errors;
-// }
 
 const onSubmit = values => {
   console.log(values);
@@ -44,62 +32,117 @@ const validationSchema = Yup.object({
 })
 
 function YoutubeForm() {
-  const formik = useFormik({
-    initialValues,
-    onSubmit, 
-    validationSchema,
-    //validate,
-  });
-
+  
   return (
     <Container>
-      <div>
-        <form onSubmit={formik.handleSubmit} >
-          <label htmlFor="name">Name</label>
-          <input 
-            type="text" 
-            id="name" 
-            name="name" 
-            onChange={formik.handleChange} 
-            onBlur={formik.handleBlur}
-            value={formik.values.name}
-          />
-          {formik.errors.name && formik.touched.name ? 
-            <div className="error">{formik.errors.name}</div> : 
-            null
-          } 
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={onSubmit}
+      >
+        <Form >
+          <div className="form-control">
+            <label htmlFor="name">Name</label>
+            <Field 
+              type="text" 
+              id="name" 
+              name="name" 
+              // onChange, onBlur, Value
+              // {...formik.getFieldProps('name')}
+            />
+            <ErrorMessage name="name" component={TextError} />
+          </div>
 
-          <label htmlFor="name">Email</label>
-          <input 
-            type="text" 
-            id="email" 
-            name="email" 
-            onChange={formik.handleChange} 
-            onBlur={formik.handleBlur}
-            value={formik.values.email} 
-          />
-          {formik.errors.email && formik.touched.email ? 
-            <div className="error">{formik.errors.email}</div> : 
-            null
-          } 
+          <div className="form-control">
+            <label htmlFor="name">Email</label>
+            <Field 
+              type="text" 
+              id="email" 
+              name="email" 
+            />
+            <ErrorMessage name="email" component={TextError} />
+          </div>
 
-          <label htmlFor="name">Channel</label>
-          <input 
-            type="text" 
-            id="channel" 
-            name="channel" 
-            onChange={formik.handleChange} 
-            onBlur={formik.handleBlur}
-            value={formik.values.channel}
-          />
-          {formik.errors.channel && formik.touched.channel ? 
-            <div className="error">{formik.errors.channel}</div> :
-            null
-          } 
+          <div className="form-control">
+            <label htmlFor="name">Channel</label>
+            <Field 
+              type="text" 
+              id="channel" 
+              name="channel" 
+            />
+            <ErrorMessage name="channel" component={TextError} />
+          </div>
+
+          <div className="form-control">
+            <label htmlFor="comments">Comments</label>
+            <Field 
+              id="comments"
+              name="comments"
+              as="textarea"
+            />
+          </div>
+
+          <div className="form-control">
+            <label htmlFor="address">Adress</label>
+            <Field 
+              name="address"
+            >
+              {(props) => {
+                const { field, form, meta } = props;
+
+                return (
+                  <div>
+                    <input type="text" id="address" {...field}/>
+                    {meta.touched && meta.error ? (
+                      <div>
+                        {meta.error}
+                      </div>
+                    ): null}
+                  </div>
+                )
+              }}
+            </Field>
+          </div>
+
+          <div className="form-control">
+            <label htmlFor="facebook">Facebook Profile</label>
+            <Field 
+              id="facebook"
+              name="social.facebook"
+              type="text"
+            />
+          </div>
+
+          <div className="form-control">
+            <label htmlFor="twitter">Twitter Profile</label>
+            <Field 
+              id="twitter"
+              name="social.twitter"
+              type="text"
+            />
+          </div>
+
+          <div className="form-control">
+            <label htmlFor="primaryPh">Primary phone Number</label>
+            <Field 
+              id="primaryPh"
+              name="phoneNumbers[0]"
+              type="text"
+            />
+          </div>
+
+          <div className="form-control">
+            <label htmlFor="secondPh">Second phone Number</label>
+            <Field 
+              id="secondPh"
+              name="phoneNumbers[1]"
+              type="text"
+            />
+          </div>
 
           <button className="button" type="submit" >Submit</button>
-        </form>
-      </div>
+        </Form>
+      </Formik>
     </Container>
   );
 }

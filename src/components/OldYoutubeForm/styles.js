@@ -41,7 +41,7 @@ export const Container = styled.div`
   }
 
   .error {
-    margin-top: -15px;
+    margin-bottom: 10px;
     color: red;
   }
 `;
