@@ -1,10 +1,10 @@
 import React from 'react';
 
-import YoutubeForm from './components/YoutubeForm/index';
+import OldYoutubeForm from './components/OldYoutubeForm';
 
 function App() {
   return (
-    <YoutubeForm />
+    <OldYoutubeForm />
   );
 }
 
