@@ -1,10 +1,18 @@
 import React from 'react';
 
-import YoutubeForm from './components/YoutubeForm';
+// import FormikContainer from './components/FormikContainer';
+import LoginFormik from './pages/LoginFormik';
+// import Registration from './pages/Registration';
+
+import { ThemeProvider, theme } from '@chakra-ui/core';
+
+// import EnrolmentFormik from './pages/EnrolmentFormik';
 
 function App() {
   return (
-    <YoutubeForm />
+    <ThemeProvider theme={theme}>
+      <LoginFormik />
+    </ThemeProvider>
   );
 }
 
